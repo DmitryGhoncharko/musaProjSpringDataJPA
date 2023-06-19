@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 public class PersonUtil {
     public Person getOldestPerson(List<Person> personList) {
         personList.sort(Comparator.comparingInt(Person::getYearOfBorn));
-        Person oldestPerson = personList.get(personList.size() - 1);
+        Person oldestPerson = personList.get(0);
         List<Person> personListOnYearOfBorn = new ArrayList<>(personList.stream().filter(x -> oldestPerson.getYearOfBorn() == x.getYearOfBorn()).toList());
         personListOnYearOfBorn.sort(Comparator.comparingInt(Person::getMonthOfBorn));
-        return personListOnYearOfBorn.get(personListOnYearOfBorn.size() - 1);
+        return personListOnYearOfBorn.get(0);
     }
 
     public int getAverageAge(List<Person> personList) {
@@ -24,8 +24,8 @@ public class PersonUtil {
     }
     public List<Person> findPersonMoreThanAverageAge(List<Person> personList){
         int averageAge = getAverageAge(personList);
-        int averageYear = new Date().getYear()-averageAge;
-        return personList.stream().filter(x->x.getYearOfBorn()>averageYear).collect(Collectors.toList());
+        int averageYear = new Date().getYear()+ 1900 - averageAge;
+        return personList.stream().filter(x->x.getYearOfBorn()<averageYear).collect(Collectors.toList());
     }
 
     public List<Person> sortBySurNameReverse(List<Person> personList){
